@@ -11,4 +11,10 @@ if [ -z "$input" ] || [ -z "$output" ]; then
     exit 1
 fi
 
+cat "$input/boot.log" "$input/run.log" > "$output/all.log"
+grep "^ERROR" "$output/all.log" > "$output/errors.log" || true
+grep -E "^(WARN|ERROR)" "$output/all.log" > "$output/attention.log" || true
+tail -n 5 "$output/all.log" > "$output/recent.log" || true
+head -n 3 "$output/errors.log" > "$output/first-errors.log" || true
+wc -l < "$output/errors.log" > "$output/error-count.txt"
 exit 0
