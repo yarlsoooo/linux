@@ -10,5 +10,22 @@ output="$2"
 if [ -z "$input" ] || [ -z "$output" ]; then
     exit 1
 fi
+mkdir -p "$output/sentry_ws/scripts"
+mkdir -p "$output/sentry_ws/config"
+mkdir -p "$output/sentry_ws/logs"
+mkdir -p "$output/sentry_ws/tmp"
 
+touch "$output/sentry_ws/logs/.keep"
+touch "$output/sentry_ws/tmp/scratch.txt"
+
+cat > "$output/sentry_ws/scripts/hello.sh" << 'EOF'
+#!/bin/bash
+echo "Hello, AIM Linux!"
+EOF
+
+cat > "$output/sentry_ws/config/robot.conf" << 'EOF'
+robot=sentry
+mode=training
+log_level=INFO
+EOF
 exit 0

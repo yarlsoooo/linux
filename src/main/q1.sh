@@ -11,8 +11,9 @@ if [ -z "$input" ] || [ -z "$output" ]; then
     exit 1
 fi
 
-cd "$input/handover"
-pwd > "$output/location.txt"
-cat "$input/handover/robot-id.txt" > "$output/robot-id.txt"
-cat "$input/handover/welcome.txt" > "$output/welcome.txt"
+mkdir -p "$output"
+(cd "$input/handover" && pwd) > "$output/location.txt"
+cp "$input/handover/.robot-id" "$output/robot-id.txt"
+cp "$input/notes/welcome.txt" "$output/welcome.txt"
+
 exit 0
