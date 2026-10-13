@@ -10,5 +10,19 @@ output="$2"
 if [ -z "$input" ] || [ -z "$output" ]; then
     exit 1
 fi
+rm -rf "$output/sentry_ws/tmp"
+mkdir -p "$output/sentry_ws/scripts"
+mkdir -p "$output/sentry_ws/config"
+mkdir -p "$output/sentry_ws/backup"
+mkdir -p "$output/sentry_ws/archive"
+cp "$input/hello.sh" "$output/sentry_ws/scripts/hello.sh"
+cp "$input/robot.conf" "$output/sentry_ws/config/robot.conf"
+cp "$input/draft.conf" "$output/sentry_ws/config/draft.conf"
+cp "$output/sentry_ws/config/robot.conf" "$output/sentry_ws/backup/robot.conf"
+mv "$output/sentry_ws/config/draft.conf" "$output/sentry_ws/archive/draft.conf.old"
+rm -rf "$output/sentry_ws/tmp"
+chmod 750 "$output/sentry_ws/scripts/hello.sh"
+chmod 640 "$output/sentry_ws/config/robot.conf"
 
+bash "$output/sentry_ws/scripts/hello.sh" > "$output/hello-output.txt"
 exit 0
